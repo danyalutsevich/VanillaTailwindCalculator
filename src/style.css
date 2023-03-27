@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    button {
+        @apply px-5 py-3 rounded m-3 dark:text-white font-mono text-lg hover:brightness-75;
+    }
+
+    .number {
+        @apply dark:bg-zinc-700 bg-zinc-300;
+    }
+
+    .operator {
+        @apply dark:bg-orange-500 bg-blue-400;
+    }
+
+    .modifier {
+        @apply dark:bg-yellow-400 bg-zinc-500;
+    }
+}
