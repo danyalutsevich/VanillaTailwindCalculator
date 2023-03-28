@@ -1,4 +1,5 @@
 import { calculate } from "./calculate.js"
+import { getHistory, setHistory } from "./history.js"
 
 const theme = document.getElementById("theme")
 const equals = document.getElementById("equals")
@@ -6,7 +7,9 @@ const clean = document.getElementById("clean")
 const root = document.getElementById("root")
 const remove = document.getElementById("remove")
 const input = document.getElementById("input")
-
+const historyList = document.getElementById("historyList")
+let history = getHistory() || []
+showHistory()
 // change theme and icon
 document.getElementsByClassName("changeTheme")[0].addEventListener("click", function () {
     document.documentElement.classList.toggle("dark")
@@ -33,17 +36,28 @@ for (let operator of document.getElementsByClassName("operator")) {
 
 // set equals click handler
 equals.addEventListener("click", () => {
-    input.value = calculate(input.value)
+    let result = calculate(input.value)
+    history.push(`${input.value}=${result}`)
+    input.value = result
+    setHistory(history)
+    showHistory()
 })
 
 // set clear click handler
 clean.addEventListener("click", () => {
     input.value = ""
+    history = []
+    setHistory([])
+    showHistory()
 })
 
 // set root click handler
 root.addEventListener("click", () => {
-    input.value = Math.sqrt(calculate(input.value))
+    let result = Math.sqrt(calculate(input.value))
+    history.push(`√${input.value}=${result}`)
+    input.value = result
+    setHistory(history)
+    showHistory()
 })
 
 // set remove click handler
@@ -55,20 +69,29 @@ remove.addEventListener("click", () => {
 function handleInput(event) {
     const allowedChars = /[0-9=+\-*/^.]/;
     const inputChar = String.fromCharCode(event.charCode);
-
+    const operators = ["+", "-", "*", "/", "^", "."]
     if (!allowedChars.test(inputChar)) {
         event.preventDefault();
     }
     else {
-        input.value += inputChar
+        if (operators.includes(inputChar) && operators.includes(input.value[input.value.length - 1])) {
+            input.value = input.value.slice(0, -1) + inputChar
+        }
+        else {
+            input.value += inputChar
+        }
     }
 }
 
 // set input keypress handler
 document.addEventListener("keypress", (event) => {
     if (event.key === "Enter" || event.key === "=") {
-        input.value = calculate(input.value)
+        let result = calculate(input.value)
+        history.push(`${input.value}=${result}`)
+        input.value = result
         input.value.replace("=", "")
+        setHistory(history)
+        showHistory()
     }
     else if (event.key === "c") {
         input.value = ""
@@ -78,5 +101,13 @@ document.addEventListener("keypress", (event) => {
     }
 })
 
-
+function showHistory() {
+    historyList.innerHTML = ""
+    for (let item of history) {
+        let li = document.createElement("li")
+        li.innerHTML = item
+        li.className = "m-3 rounded-lg p-2 dark:bg-gray-500 bg-gray-400"
+        historyList.appendChild(li)
+    }
+}
 

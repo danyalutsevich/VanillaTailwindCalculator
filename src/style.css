@@ -5,7 +5,7 @@
 
 @layer components {
     button {
-        @apply px-5 py-3 rounded m-3 dark:text-white font-mono text-lg hover:brightness-75;
+        @apply px-5 py-3 rounded m-3 hover:brightness-75;
     }
 
     .number {

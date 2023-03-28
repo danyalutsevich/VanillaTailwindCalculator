@@ -11,15 +11,20 @@
     <title>Calculator</title>
 </head>
 
-<body class="dark:bg-stone-900 bg-slate-200">
+<body class="dark:bg-stone-900 bg-slate-200 relative dark:text-white font-mono text-lg">
+    <div class="absolute top-0 right-0 m-4">
+        <ol id="historyList" class="flex flex-col-reverse">
+            
+        </ol>
+    </div>
 
-    <div class="h-[100vh] flex flex-col items-center justify-center">
+    <div class="h-[100vh] flex flex-col items-center justify-center ">
         <button class="changeTheme">
             <span id="theme" class="material-symbols-outlined">light_mode</span>
         </button>
         <div>
             <input id="input"
-                class="px-4 py-2 m-2 rounded-lg dark:bg-slate-200 bg-zinc-400 border focus:border-transparent outline-none"
+                class="px-4 py-2 m-2 rounded-lg text-black dark:bg-slate-200 bg-zinc-400 border focus:border-transparent outline-none"
                 type="text">
         </div>
         <div id="numpad" class="flex flex-col">
@@ -31,7 +36,7 @@
                 <button class="number">7</button>
                 <button class="number">8</button>
                 <button class="number">9</button>
-                <button class="operator">x</button>
+                <button class="operator">*</button>
                 <button class="number">4</button>
                 <button class="number">5</button>
                 <button class="number">6</button>
@@ -46,7 +51,6 @@
                 <button id="equals" class="modifier">=</button>
             </div>
         </div>
-
     </div>
     <script src="./index.js" type="module"></script>
 </body>
