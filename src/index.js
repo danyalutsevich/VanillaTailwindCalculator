@@ -30,7 +30,13 @@ for (let number of document.getElementsByClassName("number")) {
 // set operator click handler
 for (let operator of document.getElementsByClassName("operator")) {
     operator.addEventListener("click", () => {
-        input.value += operator.innerHTML
+        // if last char is operator, replace it with new operator
+        if (input.value.slice(-1).match(/[+\-*/^]/) && operator.innerHTML.match(/[+\-*/^]/)) {
+            input.value = input.value.slice(0, -1) + operator.innerHTML
+        }
+        else {
+            input.value += operator.innerHTML
+        }
     })
 }
 
@@ -67,21 +73,22 @@ remove.addEventListener("click", () => {
 
 // handler that allows only numbers and operators
 function handleInput(event) {
-    const allowedChars = /[0-9=+\-*/^.]/;
-    const inputChar = String.fromCharCode(event.charCode);
-    const operators = ["+", "-", "*", "/", "^", "."]
-    if (!allowedChars.test(inputChar)) {
+    const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '^', '.'];
+    const lastChar = input.value.slice(-1);
+
+    if (!allowedKeys.includes(event.key)) {
         event.preventDefault();
+        return;
+    }
+    // if last char is operator, replace it with new operator
+    if (lastChar.match(/[+\-*/^]/) && event.key.match(/[+\-*/^]/)) {
+        input.value = input.value.slice(0, -1) + event.key;
     }
     else {
-        if (operators.includes(inputChar) && operators.includes(input.value[input.value.length - 1])) {
-            input.value = input.value.slice(0, -1) + inputChar
-        }
-        else {
-            input.value += inputChar
-        }
+        input.value += event.key;
     }
 }
+
 
 // set input keypress handler
 document.addEventListener("keypress", (event) => {
