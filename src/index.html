@@ -14,14 +14,10 @@
 <body class="dark:bg-stone-900 bg-slate-200 relative dark:text-white font-mono text-lg">
     <div class="absolute top-0 right-0 m-4">
         <ol id="historyList" class="flex flex-col-reverse">
-            
         </ol>
     </div>
-
     <div class="h-[100vh] flex flex-col items-center justify-center ">
-        <button class="changeTheme">
-            <span id="theme" class="material-symbols-outlined">light_mode</span>
-        </button>
+        <span class="material-symbols-outlined changeTheme m-3">light_mode</span>
         <div>
             <input id="input"
                 class="px-4 py-2 m-2 rounded-lg text-black dark:bg-slate-200 bg-zinc-400 border focus:border-transparent outline-none"
@@ -30,7 +26,7 @@
         <div id="numpad" class="flex flex-col">
             <div class="grid grid-cols-4">
                 <button class="operator">^</button>
-                <button id="root" class="modifier">√</button>
+                <button id="sqrt" class="modifier">√</button>
                 <button id="clean" class="modifier">c</button>
                 <button id="remove" class="modifier">←</button>
                 <button class="number">7</button>
@@ -45,9 +41,9 @@
                 <button class="number">2</button>
                 <button class="number">3</button>
                 <button class="operator">+</button>
-                <button class="modifier">±</button>
+                <button class="operator">/</button>
                 <button class="number">0</button>
-                <button class="number">.</button>
+                <button id="dot">.</button>
                 <button id="equals" class="modifier">=</button>
             </div>
         </div>

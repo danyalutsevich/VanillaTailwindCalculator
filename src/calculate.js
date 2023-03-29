@@ -13,6 +13,9 @@ export function calculate(input) {
         } else if (operator === "*") {
             result *= number;
         } else if (operator === "/") {
+            if (number == 0) {
+                return "Division by zero is not allowed!"
+            }
             result /= number;
         } else if (operator === "√") {
             result = Math.sqrt(number);

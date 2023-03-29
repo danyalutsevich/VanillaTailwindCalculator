@@ -4,12 +4,16 @@ import { getHistory, setHistory } from "./history.js"
 const theme = document.getElementById("theme")
 const equals = document.getElementById("equals")
 const clean = document.getElementById("clean")
-const root = document.getElementById("root")
+const sqrt = document.getElementById("sqrt")
 const remove = document.getElementById("remove")
 const input = document.getElementById("input")
+const dot = document.getElementById("dot")
 const historyList = document.getElementById("historyList")
+
 let history = getHistory() || []
 showHistory()
+ 
+let isDotSet = false
 // change theme and icon
 document.getElementsByClassName("changeTheme")[0].addEventListener("click", function () {
     document.documentElement.classList.toggle("dark")
@@ -37,6 +41,7 @@ for (let operator of document.getElementsByClassName("operator")) {
         else {
             input.value += operator.innerHTML
         }
+        isDotSet = false
     })
 }
 
@@ -58,7 +63,7 @@ clean.addEventListener("click", () => {
 })
 
 // set root click handler
-root.addEventListener("click", () => {
+sqrt.addEventListener("click", () => {
     let result = Math.sqrt(calculate(input.value))
     history.push(`√${input.value}=${result}`)
     input.value = result
@@ -68,7 +73,33 @@ root.addEventListener("click", () => {
 
 // set remove click handler
 remove.addEventListener("click", () => {
+    if(input.value.slice(-1).match(/[.]/)) {
+        isDotSet = false
+    }
     input.value = input.value.slice(0, -1)
+})
+
+// set dot click handler
+dot.addEventListener("click", () => {
+    // if last char is operator, add 0 before dot
+    if (input.value.slice(-1).match(/[+\-*/^]/) || input.value.slice(-1) === "") {
+        input.value += "0."
+        return
+    }  // if last char is dot, do nothing
+    else if (input.value.slice(-1).match(/[.]/)) {
+        return
+    } // if dot is already set, do nothing
+    else if (isDotSet) {
+        return
+    } 
+    // else add dot
+    input.value += "."
+    isDotSet = true
+})
+
+// set plusminus click handler
+plusminus.addEventListener("click", () => {
+    input.value = -calculate(input.value)
 })
 
 // handler that allows only numbers and operators
