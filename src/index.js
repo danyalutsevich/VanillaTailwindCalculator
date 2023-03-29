@@ -97,11 +97,6 @@ dot.addEventListener("click", () => {
     isDotSet = true
 })
 
-// set plusminus click handler
-plusminus.addEventListener("click", () => {
-    input.value = -calculate(input.value)
-})
-
 // handler that allows only numbers and operators
 function handleInput(event) {
     const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/', '^', '.'];
@@ -120,7 +115,6 @@ function handleInput(event) {
     }
 }
 
-
 // set input keypress handler
 document.addEventListener("keypress", (event) => {
     if (event.key === "Enter" || event.key === "=") {
@@ -133,6 +127,9 @@ document.addEventListener("keypress", (event) => {
     }
     else if (event.key === "c") {
         input.value = ""
+    }
+    else if (event.key === ".") {
+        dot.dispatchEvent(new Event("click"))
     }
     else {
         handleInput(event)
