@@ -13,7 +13,15 @@
 
 <body class="dark:bg-stone-900 bg-slate-200 relative dark:text-white font-mono text-lg">
     <div class="absolute top-0 right-0 m-4">
-        <ol id="historyList" class="flex flex-col-reverse">
+        <div id="clearHistory"
+            class="material-symbols-outlined m-3 hover:brightness-75 bg-zinc-500 p-2 rounded text-white">
+            delete
+        </div>
+        <div id="hideHistory"
+            class="material-symbols-outlined m-3 hover:brightness-75 bg-zinc-500 p-2 rounded text-white">
+            keyboard_arrow_right
+        </div>
+        <ol id="historyList" class="flex flex-col-reverse m-3">
         </ol>
     </div>
     <div class="h-[100vh] flex flex-col items-center justify-center ">

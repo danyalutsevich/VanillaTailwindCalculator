@@ -9,10 +9,12 @@ const remove = document.getElementById("remove")
 const input = document.getElementById("input")
 const dot = document.getElementById("dot")
 const historyList = document.getElementById("historyList")
+const clearHistory = document.getElementById("clearHistory")
+const hideHistory = document.getElementById("hideHistory")
 
 let history = getHistory() || []
 showHistory()
- 
+
 let isDotSet = false
 // change theme and icon
 document.getElementsByClassName("changeTheme")[0].addEventListener("click", function () {
@@ -27,6 +29,14 @@ document.getElementsByClassName("changeTheme")[0].addEventListener("click", func
 // set number click handler
 for (let number of document.getElementsByClassName("number")) {
     number.addEventListener("click", () => {
+        let numbers = input.value.split(/[-+*/^]/)
+        if (input.value.length > 0 // input is not empty
+            && numbers[numbers.length - 1] == 0 // last number is 0
+            && !isDotSet // dot is not set
+            && !input.value.slice(-1).match(/[+\-*/^]/)) { // last char is not operator
+            input.value += "." + number.innerHTML
+            return
+        }
         input.value += number.innerHTML
     })
 }
@@ -57,9 +67,19 @@ equals.addEventListener("click", () => {
 // set clear click handler
 clean.addEventListener("click", () => {
     input.value = ""
+})
+
+// set clear history click handler
+clearHistory.addEventListener("click", () => {
     history = []
     setHistory([])
     showHistory()
+})
+
+// set hide history click handler
+hideHistory.addEventListener("click", () => {
+    historyList.classList.toggle("hidden")
+    hideHistory.innerHTML = historyList.classList.contains("hidden") ? "keyboard_arrow_left" : "keyboard_arrow_right"
 })
 
 // set root click handler
@@ -73,7 +93,7 @@ sqrt.addEventListener("click", () => {
 
 // set remove click handler
 remove.addEventListener("click", () => {
-    if(input.value.slice(-1).match(/[.]/)) {
+    if (input.value.slice(-1).match(/[.]/)) {
         isDotSet = false
     }
     input.value = input.value.slice(0, -1)
@@ -91,7 +111,7 @@ dot.addEventListener("click", () => {
     } // if dot is already set, do nothing
     else if (isDotSet) {
         return
-    } 
+    }
     // else add dot
     input.value += "."
     isDotSet = true
