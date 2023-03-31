@@ -148,6 +148,18 @@ document.addEventListener("keypress", (event) => {
     else if (event.key === "c") {
         input.value = ""
     }
+    else if (event.key >= 0 && event.key <= 9) {
+        let numbers = input.value.split(/[-+*/^]/)
+        if (input.value.length > 0 // input is not empty
+            && numbers[numbers.length - 1] == 0 // last number is 0
+            && !isDotSet // dot is not set
+            && !input.value.slice(-1).match(/[+\-*/^]/)) { // last char is not operator
+            input.value += "." + event.key
+            return
+        }
+        input.value += event.key
+
+    }
     else if (event.key === ".") {
         dot.dispatchEvent(new Event("click"))
     }
